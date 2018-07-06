@@ -108,6 +108,13 @@
 		<artifactId>pinyougou-content-interface</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</dependency>
+	
+	<dependency>
+		<groupId>org.apache.activemq</groupId>
+		<artifactId>activemq-client</artifactId>
+		<version>5.13.4</version>
+	 </dependency>
+
   </dependencies>
   
   
@@ -119,7 +126,7 @@
 				<version>2.2</version>
 				<configuration>
 					<!-- 指定端口 -->
-					<port>9101</port>
+					<port>9100</port>
 					<!-- 请求路径 -->
 					<path>/</path>
 				</configuration>

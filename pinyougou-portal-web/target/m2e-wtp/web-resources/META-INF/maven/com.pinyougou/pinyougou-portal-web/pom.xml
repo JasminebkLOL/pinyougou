@@ -6,7 +6,9 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>pinyougou-portal-web</artifactId>
-  <packaging>war</packaging><dependencies>
+  <packaging>war</packaging>
+  
+  <dependencies>
     <!-- Spring -->
 	<dependency>
 		<groupId>org.springframework</groupId>
@@ -75,8 +77,6 @@
 		<scope>provided</scope>
 	</dependency>
 	
-
-
 	<dependency>
 		<groupId>com.pinyougou</groupId>
 		<artifactId>pinyougou-common</artifactId>

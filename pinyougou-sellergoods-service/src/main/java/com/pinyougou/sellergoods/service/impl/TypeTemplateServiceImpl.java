@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.dubbo.config.annotation.Service;
@@ -88,8 +89,11 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 	}
 	
 	
-		@Override
+	@Override
 	public PageResult findPage(TbTypeTemplate typeTemplate, int pageNum, int pageSize) {
+		
+		saveToRedis();
+		
 		PageHelper.startPage(pageNum, pageSize);
 		
 		TbTypeTemplateExample example=new TbTypeTemplateExample();
@@ -113,6 +117,23 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 		
 		Page<TbTypeTemplate> page= (Page<TbTypeTemplate>)typeTemplateMapper.selectByExample(example);		
 		return new PageResult(page.getTotal(), page.getResult());
+	}
+
+	@Autowired
+	private RedisTemplate redisTemplate;
+	
+	//将typeTemplate表中的brandIds与spec_ids的数据读出来存入redis中,在findPage方法中调用
+	private void saveToRedis() {
+		List<TbTypeTemplate> list = findAll();
+		for (TbTypeTemplate tbTypeTemplate : list) {
+			List<Map> brandList = JSON.parseArray(tbTypeTemplate.getBrandIds(),Map.class);
+			redisTemplate.boundHashOps("brandList").put(tbTypeTemplate.getId(), brandList);
+			
+			//这里调用了之前写好的获取specificationOption的方法,将规格选项封装到Map的options中
+			List<Map> specList = findSpecList(tbTypeTemplate.getId());
+			redisTemplate.boundHashOps("specList").put(tbTypeTemplate.getId(), specList);
+			
+		}
 	}
 
 		@Autowired

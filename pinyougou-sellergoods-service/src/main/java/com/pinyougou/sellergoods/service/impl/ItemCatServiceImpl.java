@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.dubbo.config.annotation.Service;
@@ -95,6 +96,7 @@ public class ItemCatServiceImpl implements ItemCatService {
 		return NotDeleList;
 	}
 
+	
 	@Override
 	public PageResult findPage(TbItemCat itemCat, int pageNum, int pageSize) {
 		PageHelper.startPage(pageNum, pageSize);
@@ -113,8 +115,26 @@ public class ItemCatServiceImpl implements ItemCatService {
 		return new PageResult(page.getTotal(), page.getResult());
 	}
 
+	@Autowired
+	private RedisTemplate redisTemplate;
+	/**
+	 * 商品分类,每次查询都要调用此方法.
+	 * @param ParentId
+	 * @return
+	 */
 	@Override
 	public List<TbItemCat> findByParentId(Long ParentId) {
+		//每次执行查询的时候，一次性读取缓存进行存储 (因为每次增删改都要执行此方法)
+		List<TbItemCat> list = findAll();
+		for (TbItemCat tbItemCat : list) {
+			try {
+				redisTemplate.boundHashOps("itemCat").put(tbItemCat.getName(), tbItemCat.getTypeId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("更新缓存:商品分类表");
+		
 		TbItemCatExample example = new TbItemCatExample();
 		Criteria criteria = example.createCriteria();
 		criteria.andParentIdEqualTo(ParentId);
