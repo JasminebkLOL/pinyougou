@@ -1,5 +1,5 @@
 //商品详细页（控制层）
-app.controller('itemController',function($scope){
+app.controller('itemController',function($scope,$location,$http){
 	//数量操作
 	$scope.addNum=function(i){
 		$scope.num=$scope.num+i;
@@ -64,15 +64,36 @@ app.controller('itemController',function($scope){
 		
 	}
 	
-	//添加商品到购物车
-	$scope.addToCart=function(){
-		alert('skuid:'+$scope.sku.id);				
+	//通过$location获取solr搜索页传递过来的skuId,匹配页面  skuList,得到应该展示的规格
+	$scope.matchSkuWithSkuId=function(){
+		//获取搜索页传来的sku
+		var skuId= $location.search()['id'];
+		//遍历skuList,如果匹配上了,就让页面展示相应的规格
+		for(var i=0;i<skuList.length;i++){
+			if(skuList[i].id==skuId){
+				$scope.sku=skuList[i];
+				return;
+			}
+		}
+		//如果匹配不到,则让sku显示脱销了..
+		$scope.sku={id:0,'title':'-----',price:0};
 	}
 
-
-
 	
-	
+	//添加商品到购物车
+	$scope.addToCart=function(){
+		$http.get('http://localhost:9107/cart/addGoodsToCartList.do?itemId='
+			+ $scope.sku.id +'&num='+$scope.num,{'withCredentials':true}).success(
+			 function(response){
+				 if(response.success){
+					 location.href='http://localhost:9107/cart.html';//跳转到购物车页面
+				 }else{
+					 alert(response.message);
+				 }					 
+			 }				
+		);
+		
+	}
 	
 	
 });

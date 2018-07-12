@@ -87,6 +87,34 @@
 		<artifactId>pinyougou-common</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</dependency>
+	
+	<!-- spring Security与cas整合 -->
+	<dependency>  
+	   <groupId>org.springframework.security</groupId>  
+	   <artifactId>spring-security-cas</artifactId>  
+	   <version>4.1.0.RELEASE</version>  
+	</dependency>     
+	<dependency>  
+	        <groupId>org.jasig.cas.client</groupId>  
+	        <artifactId>cas-client-core</artifactId>  
+	        <version>3.3.3</version>  
+	        <exclusions>  
+	            <exclusion>  
+	                <groupId>org.slf4j</groupId>  
+	                <artifactId>log4j-over-slf4j</artifactId>  
+	            </exclusion>  
+	        </exclusions>  
+	</dependency>
+	<!-- spring Security jar -->
+	<dependency>
+		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-web</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-config</artifactId>
+	</dependency>
+	
   </dependencies>
   
   
