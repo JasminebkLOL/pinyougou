@@ -57,6 +57,7 @@ app.controller('cartController',function($scope, cartService){
 	
 	
 	$scope.submitOrder=function(){
+		//添加用户基本信息
 		$scope.order.receiverAreaName=$scope.address.address;
 		$scope.order.receiverMobile=$scope.address.mobile;
 		$scope.order.receiver = $scope.address.contact;
@@ -65,7 +66,7 @@ app.controller('cartController',function($scope, cartService){
 			function(response){
 				if(response.success){
 					//提交订单成功跳转支付页面
-					if(order.paymentType=="1"){//微信支付
+					if($scope.order.paymentType=="1"){//微信支付
 						location.href="pay.html";
 					}else{//如果货到付款，跳转到提示页面
 						location.href="paysuccess.html";

@@ -132,7 +132,7 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public List<Cart> findCartListFromRedis(String username) {
-		System.out.println("从redis中提取购物车数据....."+username);
+		System.out.println("从redis中提取购物车数据..."+username);
 		List<Cart> cartList = (List<Cart>) redisTemplate.boundHashOps("cartList").get(username);
 		if(cartList==null){//若redis中不存在数据,也不能返回null,要new一个数组
 			cartList = new ArrayList<>();

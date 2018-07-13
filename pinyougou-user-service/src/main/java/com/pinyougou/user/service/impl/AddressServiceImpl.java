@@ -124,15 +124,18 @@ public class AddressServiceImpl implements AddressService {
 		return new PageResult(page.getTotal(), page.getResult());
 	}
 
-		@Override
-		public List<TbAddress> findListByUserId(String userId) {
+	/**
+	 * 根据用户登录名查询用户地址信息.按默认地址降序排序,第一个为默认地址
+	 */
+	@Override
+	public List<TbAddress> findListByUserId(String userId) {
 
-			TbAddressExample example = new TbAddressExample();
-			Criteria criteria = example.createCriteria();
-			criteria.andUserIdEqualTo(userId);
-			example.setOrderByClause("is_default desc");
-			List<TbAddress> list = addressMapper.selectByExample(example);
-			return list;
-		}
+		TbAddressExample example = new TbAddressExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andUserIdEqualTo(userId);
+		example.setOrderByClause("is_default desc");
+		List<TbAddress> list = addressMapper.selectByExample(example);
+		return list;
+	}
 	
 }

@@ -49,7 +49,7 @@ public class OrderController {
 	
 	
 	/**
-	 * 增加
+	 * 增加,用户购物车下订单,各个商家生成各自的订单信息.
 	 * @param order
 	 * @return
 	 */
