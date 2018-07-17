@@ -9,10 +9,10 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 		<!-- 多个服务,需要使用不同的端口 -->
-    <dubbo:protocol name="dubbo" port="20887"></dubbo:protocol>
+    <dubbo:protocol name="dubbo" port="20889"></dubbo:protocol>
     
-	<dubbo:application name="pinyougou-cart-service"/>  
+	<dubbo:application name="pinyougou-seckill-service"/>  
     <dubbo:registry address="zookeeper://192.168.25.160:2181"/>
-    <dubbo:annotation package="com.pinyougou.cart.service.impl" />  
+    <dubbo:annotation package="com.pinyougou.seckill.service.impl" />  
    
 </beans>

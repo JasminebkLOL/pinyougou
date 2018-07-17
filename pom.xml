@@ -32,6 +32,9 @@
   	<module>pinyougou-order-interface</module>
   	<module>pinyougou-pay-interface</module>
   	<module>pinyougou-pay-service</module>
+  	<module>pinyougou-seckill-interface</module>
+  	<module>pinyougou-seckill-service</module>
+  	<module>pinyougou-seckill-web</module>
   </modules>
   
   <!-- 集中定义依赖版本号 -->
